@@ -1,5 +1,7 @@
 package org.poo.gwentstonelite;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.poo.fileio.ActionsInput;
 import org.poo.fileio.GameInput;
 import org.poo.fileio.StartGameInput;
@@ -13,15 +15,25 @@ public final class GameSession {
     public static final int MAXHEALTH = 30;
     public static final int MAXMANA = 10;
     public static final int MAXROWS = 4;
+    @Getter
     private Player playerOne;
+    @Getter
     private Player playerTwo;
+    @Getter
     private ArrayList<ArrayList<Card>> board;
     private StartGameInput setupGame;
+    @Setter
+    @Getter
     private ArrayList<ActionsInput> actions;
+    @Setter
+    @Getter
     private int playerTurn;
     private int manaPerRound;
+    @Setter
     private boolean playerOneEndTurn;
+    @Setter
     private boolean playerTwoEndTurn;
+    @Setter
     private boolean gameEnded;
     private GameCommand actionPerformer;
 
@@ -109,47 +121,8 @@ public final class GameSession {
         playerTwoEndTurn = false;
     }
 
-    public Player getPlayerOne() {
-        return playerOne;
-    }
-
-    public Player getPlayerTwo() {
-        return playerTwo;
-    }
-
-    public ArrayList<ArrayList<Card>> getBoard() {
-        return board;
-    }
-
-    public ArrayList<ActionsInput> getActions() {
-        return actions;
-    }
-
-    public void setActions(final ArrayList<ActionsInput> actions) {
-        this.actions = actions;
-    }
-
-    public int getPlayerTurn() {
-        return playerTurn;
-    }
-
-    public void setPlayerTurn(final int playerTurn) {
-        this.playerTurn = playerTurn;
-    }
-
-    public void setPlayerOneEndTurn(final boolean playerOneEndTurn) {
-        this.playerOneEndTurn = playerOneEndTurn;
-    }
-
-    public void setPlayerTwoEndTurn(final boolean playerTwoEndTurn) {
-        this.playerTwoEndTurn = playerTwoEndTurn;
-    }
-
     public boolean isGameEnded() {
         return gameEnded;
     }
 
-    public void setGameEnded(final boolean gameEnded) {
-        this.gameEnded = gameEnded;
-    }
 }

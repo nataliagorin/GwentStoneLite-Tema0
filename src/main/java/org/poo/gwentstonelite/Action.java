@@ -112,4 +112,11 @@ public final class Action {
             default -> "back";
         };
     }
+
+    public boolean isTank(final Card card) {
+        return switch (card.getName()) {
+            case "Goliath", "Warden" -> true;
+            default -> false;
+        };
+    }
 }

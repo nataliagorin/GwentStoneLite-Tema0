@@ -1,6 +1,8 @@
 package org.poo.gwentstonelite;
 
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import lombok.Getter;
+import lombok.Setter;
 import org.poo.fileio.GameInput;
 import org.poo.fileio.Input;
 
@@ -10,13 +12,17 @@ public final class GwentStoneLite {
     public static final int ROW2 = 2;
     public static final int ROW3 = 3;
     public static final int ROWFULL = 5;
-    private Input input;
+    private final Input input;
+    @Setter
+    @Getter
     private ArrayNode output;
-    private Player playerOne;
-    private Player playerTwo;
-    private GameSession gameSession;
+    private final Player playerOne;
+    private final Player playerTwo;
+    @Getter
     private static int gamesPlayed;
+    @Getter
     private static Action cardActions;
+    @Getter
     private static OutputBuilder outputCreator;
 
     public GwentStoneLite(final Input input, final ArrayNode output) {
@@ -36,34 +42,15 @@ public final class GwentStoneLite {
         playerTwo.setGamesWon(0);
 
         for (GameInput game : input.getGames()) {
-            gameSession = new GameSession(playerOne, playerTwo, game);
+            GameSession gameSession = new GameSession(playerOne, playerTwo, game);
             gameSession.prepareGame(cardActions);
             gameSession.startGame();
         }
     }
 
 
-    public ArrayNode getOutput() {
-        return output;
-    }
-
-    public void setOutput(final ArrayNode output) {
-        this.output = output;
-    }
-
-    public static int getGamesPlayed() {
-        return gamesPlayed;
-    }
-
     public static void setGamesPlayed(final int gamesPlayed) {
         GwentStoneLite.gamesPlayed = gamesPlayed;
     }
 
-    public static Action getCardActions() {
-        return cardActions;
-    }
-
-    public static OutputBuilder getOutputCreator() {
-        return outputCreator;
-    }
 }
