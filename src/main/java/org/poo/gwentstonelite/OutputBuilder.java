@@ -88,4 +88,14 @@ public final class OutputBuilder {
 
         output.add(objNode);
     }
+
+    public void createPlaceCardError(final String errorMessage, final ActionsInput action) {
+        ObjectNode objNode = objMapper.createObjectNode();
+
+        objNode.put("command", action.getCommand());
+        objNode.put("handIdx", action.getHandIdx());
+        objNode.put("error", errorMessage);
+
+        output.add(objNode);
+    }
 }
