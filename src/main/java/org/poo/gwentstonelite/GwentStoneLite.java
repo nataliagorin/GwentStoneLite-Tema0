@@ -41,4 +41,29 @@ public final class GwentStoneLite {
             gameSession.startGame();
         }
     }
+
+
+    public ArrayNode getOutput() {
+        return output;
+    }
+
+    public void setOutput(final ArrayNode output) {
+        this.output = output;
+    }
+
+    public static int getGamesPlayed() {
+        return gamesPlayed;
+    }
+
+    public static void setGamesPlayed(final int gamesPlayed) {
+        GwentStoneLite.gamesPlayed = gamesPlayed;
+    }
+
+    public static Action getCardActions() {
+        return cardActions;
+    }
+
+    public static OutputBuilder getOutputCreator() {
+        return outputCreator;
+    }
 }

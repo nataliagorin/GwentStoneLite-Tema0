@@ -2,6 +2,10 @@ package org.poo.gwentstonelite;
 
 import org.poo.fileio.CardInput;
 import org.poo.gwentstonelite.cards.Card;
+import org.poo.gwentstonelite.cards.heroes.EmpressThorina;
+import org.poo.gwentstonelite.cards.heroes.GeneralKocioraw;
+import org.poo.gwentstonelite.cards.heroes.KingMudface;
+import org.poo.gwentstonelite.cards.heroes.LordRoyce;
 import org.poo.gwentstonelite.cards.minions.Berserker;
 import org.poo.gwentstonelite.cards.minions.Goliath;
 import org.poo.gwentstonelite.cards.minions.Sentinel;
@@ -62,5 +66,43 @@ public final class Action {
 
             default:
         }
+    }
+
+    public void setHeroForPlayer(final Player player, final CardInput hero) {
+        switch (hero.getName()) {
+            case "Lord Royce":
+                player.setHeroCard(new LordRoyce(hero));
+                break;
+            case "Empress Thorina":
+                player.setHeroCard(new EmpressThorina(hero));
+                break;
+            case "King Mudface":
+                player.setHeroCard(new KingMudface(hero));
+                break;
+            case "General Kocioraw":
+                player.setHeroCard(new GeneralKocioraw(hero));
+                break;
+            default:
+        }
+    }
+
+    public void resetCardsFromBoard(final ArrayList<ArrayList<Card>> board,
+                                    final int row1, final int row2) {
+
+        for (Card card : board.get(row1)) {
+            card.setFrozen(false);
+            card.setAttacked(false);
+        }
+
+        for (Card card : board.get(row2)) {
+            card.setFrozen(false);
+            card.setAttacked(false);
+        }
+
+    }
+
+    public void resetHero(final Player player) {
+        player.getHeroCard().setFrozen(false);
+        player.getHeroCard().setAttacked(false);
     }
 }
