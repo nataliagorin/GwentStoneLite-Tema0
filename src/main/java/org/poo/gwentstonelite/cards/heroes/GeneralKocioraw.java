@@ -1,4 +1,9 @@
 package org.poo.gwentstonelite.cards.heroes;
 
-public class GeneralKocioraw {
+import org.poo.gwentstonelite.cards.Card;
+
+public final class GeneralKocioraw extends Card {
+    public GeneralKocioraw(final Card card) {
+        super(card);
+    }
 }

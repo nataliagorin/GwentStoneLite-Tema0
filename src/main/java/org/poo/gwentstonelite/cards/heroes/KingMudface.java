@@ -1,4 +1,9 @@
 package org.poo.gwentstonelite.cards.heroes;
 
-public class KingMudface {
+import org.poo.gwentstonelite.cards.Card;
+
+public final class KingMudface extends Card {
+    public KingMudface(final Card card) {
+        super(card);
+    }
 }
