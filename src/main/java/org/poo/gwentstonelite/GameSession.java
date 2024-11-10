@@ -16,12 +16,12 @@ public final class GameSession {
     public static final int MAXMANA = 10;
     public static final int MAXROWS = 4;
     @Getter
-    private Player playerOne;
+    private final Player playerOne;
     @Getter
-    private Player playerTwo;
+    private final Player playerTwo;
     @Getter
-    private ArrayList<ArrayList<Card>> board;
-    private StartGameInput setupGame;
+    private final ArrayList<ArrayList<Card>> board;
+    private final StartGameInput setupGame;
     @Setter
     @Getter
     private ArrayList<ActionsInput> actions;
@@ -34,8 +34,9 @@ public final class GameSession {
     @Setter
     private boolean playerTwoEndTurn;
     @Setter
+    @Getter
     private boolean gameEnded;
-    private GameCommand actionPerformer;
+    private final GameCommand actionPerformer;
 
     public GameSession(final Player playerOne, final Player playerTwo, final GameInput game) {
         this.playerOne = playerOne;
@@ -119,10 +120,6 @@ public final class GameSession {
 
         playerOneEndTurn = false;
         playerTwoEndTurn = false;
-    }
-
-    public boolean isGameEnded() {
-        return gameEnded;
     }
 
 }

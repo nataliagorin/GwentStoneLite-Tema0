@@ -10,6 +10,7 @@ public final class TheRipper extends Card {
         super(card);
     }
 
+
     @Override
     public void useAbility(final GameSession game, final ActionsInput action) {
         String errorMessage = "null";
@@ -63,6 +64,7 @@ public final class TheRipper extends Card {
 
         return false;
     }
+
 
     public void ability(final GameSession game, final ActionsInput action) {
         Card cardAttacked = game.getBoard().get(action.getCardAttacked().getX()).

@@ -13,8 +13,8 @@ public final class GwentStoneLite {
     public static final int ROW3 = 3;
     public static final int ROWFULL = 5;
     private final Input input;
-    @Setter
     @Getter
+    @Setter
     private ArrayNode output;
     private final Player playerOne;
     private final Player playerTwo;

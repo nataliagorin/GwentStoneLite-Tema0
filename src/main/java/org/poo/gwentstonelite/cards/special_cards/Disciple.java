@@ -10,6 +10,7 @@ public final class Disciple extends Card {
         super(card);
     }
 
+
     @Override
     public void useAbility(final GameSession game, final ActionsInput action) {
         String errorMessage = "Attacked card does not belong to the current player.";

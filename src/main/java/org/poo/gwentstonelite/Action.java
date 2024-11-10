@@ -18,7 +18,6 @@ import org.poo.gwentstonelite.cards.special_cards.TheRipper;
 import java.util.ArrayList;
 
 public final class Action {
-
     public ArrayList<ArrayList<Card>> changeDecks(final ArrayList<ArrayList<CardInput>> decks) {
         ArrayList<ArrayList<Card>> newDecks = new ArrayList<>();
         Card newCard;
@@ -86,6 +85,7 @@ public final class Action {
         }
     }
 
+
     public void resetCardsFromBoard(final ArrayList<ArrayList<Card>> board,
                                     final int row1, final int row2) {
 
@@ -101,10 +101,13 @@ public final class Action {
 
     }
 
+
     public void resetHero(final Player player) {
         player.getHeroCard().setFrozen(false);
         player.getHeroCard().setAttacked(false);
     }
+
+
 
     public String checkRow(final Card card) {
         return switch (card.getName()) {
@@ -112,6 +115,7 @@ public final class Action {
             default -> "back";
         };
     }
+
 
     public boolean isTank(final Card card) {
         return switch (card.getName()) {

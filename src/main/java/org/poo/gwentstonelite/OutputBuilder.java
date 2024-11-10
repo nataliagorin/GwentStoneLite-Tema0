@@ -1,6 +1,5 @@
 package org.poo.gwentstonelite;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -39,6 +38,12 @@ public final class OutputBuilder {
         cardObject.put("mana", card.getMana());
         cardObject.put("attackDamage", card.getAttackDamage());
         cardObject.put("health", card.getHealth());
+        cardsOutput(card, cardObject);
+
+        return cardObject;
+    }
+
+    private void cardsOutput(Card card, ObjectNode cardObject) {
         cardObject.put("description", card.getDescription());
 
         ArrayNode colors = objMapper.createArrayNode();
@@ -48,8 +53,6 @@ public final class OutputBuilder {
         cardObject.set("colors", colors);
 
         cardObject.put("name", card.getName());
-
-        return cardObject;
     }
 
     public void playerHeroOutput(final Card heroCard, final ActionsInput action) {
@@ -66,15 +69,7 @@ public final class OutputBuilder {
         ObjectNode heroObject = objMapper.createObjectNode();
 
         heroObject.put("mana", heroCard.getMana());
-        heroObject.put("description", heroCard.getDescription());
-
-        ArrayNode colors = objMapper.createArrayNode();
-        for (String color : heroCard.getColors()) {
-            colors.add(color);
-        }
-        heroObject.set("colors", colors);
-
-        heroObject.put("name", heroCard.getName());
+        cardsOutput(heroCard, heroObject);
         heroObject.put("health", heroCard.getHealth());
 
         return heroObject;
@@ -170,4 +165,61 @@ public final class OutputBuilder {
 
         output.add(objNode);
     }
+
+    public void frozenCardsOutput(final ArrayList<ArrayList<Card>> board,
+                                  final ActionsInput action) {
+
+        ObjectNode objNode = objMapper.createObjectNode();
+
+        objNode.put("command", action.getCommand());
+
+        ArrayNode arrayNode = objMapper.createArrayNode();
+        for (ArrayList<Card> row : board) {
+            for (Card card : row) {
+                if (card.isFrozen()) {
+                    arrayNode.add(createCardObject(card));
+                }
+            }
+        }
+        objNode.set("output", arrayNode);
+
+        output.add(objNode);
+    }
+
+    public void playerWinsOutput(final Player player, final ActionsInput action) {
+        ObjectNode objNode = objMapper.createObjectNode();
+
+        objNode.put("command", action.getCommand());
+        objNode.put("output", player.getGamesWon());
+
+        output.add(objNode);
+    }
+
+    public void totalGamesOutput(final ActionsInput action) {
+        ObjectNode objNode = objMapper.createObjectNode();
+
+        objNode.put("command", action.getCommand());
+        objNode.put("output", GwentStoneLite.getGamesPlayed());
+
+        output.add(objNode);
+    }
+
+    public void cardAtPositionOutput(final Card card, final ActionsInput action,
+                                     final String errorMessage) {
+
+        ObjectNode objNode = objMapper.createObjectNode();
+
+        objNode.put("command", action.getCommand());
+        objNode.put("x", action.getX());
+        objNode.put("y", action.getY());
+
+        if (errorMessage.equals("null")) {
+            objNode.set("output", createCardObject(card));
+        } else {
+            objNode.put("output", errorMessage);
+        }
+
+        output.add(objNode);
+    }
+
 }

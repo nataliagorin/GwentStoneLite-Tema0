@@ -1,5 +1,6 @@
 package org.poo.gwentstonelite.cards;
 
+import lombok.Setter;
 import org.poo.fileio.ActionsInput;
 import org.poo.fileio.CardInput;
 import org.poo.gwentstonelite.GameSession;
@@ -7,8 +8,8 @@ import org.poo.gwentstonelite.GwentStoneLite;
 
 import java.util.ArrayList;
 
+@Setter
 public class Card {
-
     private int mana;
     private int attackDamage;
     private int health;
@@ -43,69 +44,36 @@ public class Card {
         this.attacked = false;
     }
 
-
     public final int getMana() {
-            return mana;
-        }
-
-    public void setMana(final int mana) {
-            this.mana = mana;
-        }
+        return mana;
+    }
 
     public final int getAttackDamage() {
-            return attackDamage;
-        }
-
-    public void setAttackDamage(final int attackDamage) {
-        this.attackDamage = attackDamage;
+        return attackDamage;
     }
 
     public final int getHealth() {
-            return health;
-        }
-
-    public void setHealth(final int health) {
-            this.health = health;
-        }
+        return health;
+    }
 
     public final String getDescription() {
         return description;
     }
 
-    public void setDescription(final String description) {
-            this.description = description;
-    }
-
     public final ArrayList<String> getColors() {
-            return colors;
-        }
-
-    public void setColors(final ArrayList<String> colors) {
-            this.colors = colors;
-        }
+        return colors;
+    }
 
     public final String getName() {
         return name;
-    }
-
-    public void setName(final String name) {
-        this.name = name;
     }
 
     public final boolean isFrozen() {
         return frozen;
     }
 
-    public void setFrozen(final boolean frozen) {
-        this.frozen = frozen;
-    }
-
     public final boolean hasAttacked() {
         return attacked;
-    }
-
-    public void setAttacked(final boolean attacked) {
-        this.attacked = attacked;
     }
 
     public void useAttack(final GameSession game, final ActionsInput action) {
@@ -122,7 +90,7 @@ public class Card {
 
             attacked = true;
         } else {
-            Card hero = null;
+            Card hero;
             Card attacker = game.getBoard().
                     get(action.getCardAttacker().getX())
                     .get(action.getCardAttacker().getY());

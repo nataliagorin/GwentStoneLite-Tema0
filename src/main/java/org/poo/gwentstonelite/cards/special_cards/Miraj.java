@@ -59,8 +59,10 @@ public final class Miraj extends Card {
                 return true;
             }
         }
+
         return false;
     }
+
 
     public void ability(final GameSession game, final ActionsInput action) {
         Card cardAttacked = game.getBoard().get(action.getCardAttacked().getX()).

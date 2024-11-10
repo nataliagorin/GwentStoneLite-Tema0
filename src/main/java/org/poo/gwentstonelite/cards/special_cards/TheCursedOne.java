@@ -53,6 +53,7 @@ public final class TheCursedOne extends Card {
         }
     }
 
+
     public boolean checkTanksOnRow(final GameSession game, final int row) {
         for (Card card : game.getBoard().get(row)) {
             if (GwentStoneLite.getCardActions().isTank(card)) {
@@ -63,6 +64,21 @@ public final class TheCursedOne extends Card {
         return false;
     }
 
-    private void ability(GameSession game, ActionsInput action) {
+
+    public void ability(final GameSession game, final ActionsInput action) {
+        Card cardAttacked = game.getBoard().get(action.getCardAttacked().getX()).
+                get(action.getCardAttacked().getY());
+        int attackedHealth = cardAttacked.getHealth();
+        int attackedAttack = cardAttacked.getAttackDamage();
+
+        cardAttacked.setHealth(attackedAttack);
+        cardAttacked.setAttackDamage(attackedHealth);
+
+        if (cardAttacked.getHealth() == 0) {
+            game.getBoard().get(action.getCardAttacked().getX()).
+                    remove(action.getCardAttacked().getY());
+        }
+
+        setAttacked(true);
     }
 }

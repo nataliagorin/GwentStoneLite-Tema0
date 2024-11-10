@@ -34,6 +34,7 @@ public final class EmpressThorina extends Card {
         }
     }
 
+
     public void ability(final GameSession game, final ActionsInput action) {
         int y = -1;
         int maxHealth = 0;
