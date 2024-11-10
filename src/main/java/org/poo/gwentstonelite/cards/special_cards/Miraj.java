@@ -53,6 +53,17 @@ public final class Miraj extends Card {
         }
     }
 
+    /**
+     * Checks if there are any tank cards present on the specified row of the game board.
+     * A tank card is determined using the `isTank` method, which checks
+     * specific card properties.
+     *
+     * @param game The current game session, providing access to the game
+     *             board and player information.
+     * @param row The row index of the game board to check for tank cards.
+     * @return true if there is at least one tank card on the specified row;
+     *          false otherwise.
+     */
     public boolean checkTanksOnRow(final GameSession game, final int row) {
         for (Card card : game.getBoard().get(row)) {
             if (GwentStoneLite.getCardActions().isTank(card)) {
@@ -63,7 +74,17 @@ public final class Miraj extends Card {
         return false;
     }
 
-
+    /**
+     * Executes the ability of Miraj, which swaps the health between
+     * the attacking card and the card being attacked.
+     * The health of the attacker is set to the health of the attacked card,
+     * and the health of the attacked card is set to the health of the attacking card.
+     *
+     * @param game The current game session, which provides access to the game board
+     *             and the cards in play.
+     * @param action The action details, which include the position of the card being
+     *               attacked and the card attacking.
+     */
     public void ability(final GameSession game, final ActionsInput action) {
         Card cardAttacked = game.getBoard().get(action.getCardAttacked().getX()).
                 get(action.getCardAttacked().getY());

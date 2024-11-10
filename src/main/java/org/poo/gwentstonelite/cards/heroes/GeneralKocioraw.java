@@ -34,6 +34,18 @@ public final class GeneralKocioraw extends Card {
         }
     }
 
+    /**
+     * Executes the ability of the General Kocioraw card, which increases the
+     * attack damage to all cards in the affected row by 1.
+     * After the ability is executed, the card is marked as having attacked.
+     * The player's mana is reduced by the mana cost of the ability.
+     *
+     * @param game The current game session, which provides access to the board
+     *             and player information.
+     * @param action The action containing details about the affected row
+     *               where the ability will take place.
+     *               The action includes the row number that will be affected by the ability.
+     */
     public void ability(final GameSession game, final ActionsInput action) {
         ArrayList<Card> cards = game.getBoard().get(action.getAffectedRow());
 

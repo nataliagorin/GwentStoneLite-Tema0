@@ -35,6 +35,18 @@ public final class GwentStoneLite {
         outputCreator = new OutputBuilder(output);
     }
 
+    /**
+     * Initializes and starts a new game session of GwentStoneLite.
+     * This method prepares the game by setting up the decks for both players,
+     * initializing their game state, and starting the game sessions
+     * as defined in the input configuration.
+     * The steps performed by this method include:
+     *     - Sets the decks for player one and player two using the provided deck configuration.
+     *     - Resets the games won counter for both players.
+     *     - Iterates through the list of game sessions, creating and starting
+     *          each game session by preparing it
+     *          and then beginning the game.
+     */
     public void startGwentStoneLite() {
         playerOne.setDecks(cardActions.changeDecks(input.getPlayerOneDecks().getDecks()));
         playerTwo.setDecks(cardActions.changeDecks(input.getPlayerTwoDecks().getDecks()));

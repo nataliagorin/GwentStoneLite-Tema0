@@ -1,5 +1,6 @@
 package org.poo.gwentstonelite.cards;
 
+import lombok.Getter;
 import lombok.Setter;
 import org.poo.fileio.ActionsInput;
 import org.poo.fileio.CardInput;
@@ -10,12 +11,19 @@ import java.util.ArrayList;
 
 @Setter
 public class Card {
+    @Getter
     private int mana;
+    @Getter
     private int attackDamage;
+    @Getter
     private int health;
+    @Getter
     private String description;
+    @Getter
     private ArrayList<String> colors;
+    @Getter
     private String name;
+    @Getter
     private boolean frozen;
     private boolean attacked;
 
@@ -44,38 +52,34 @@ public class Card {
         this.attacked = false;
     }
 
-    public final int getMana() {
-        return mana;
-    }
-
-    public final int getAttackDamage() {
-        return attackDamage;
-    }
-
-    public final int getHealth() {
-        return health;
-    }
-
-    public final String getDescription() {
-        return description;
-    }
-
-    public final ArrayList<String> getColors() {
-        return colors;
-    }
-
-    public final String getName() {
-        return name;
-    }
-
-    public final boolean isFrozen() {
-        return frozen;
-    }
-
-    public final boolean hasAttacked() {
+    /**
+     * Returns whether the card has attacked.
+     * This method checks the current state of the card
+     * to determine if it has already attacked during the turn.
+     *
+     * @return true if the card has attacked, fals otherwise.
+     */
+    public boolean hasAttacked() {
         return attacked;
     }
 
+    /**
+     * Executes an attack using the card's attack damage. The attack can either target
+     * another card or the enemy's hero, depending on the action performed.
+     * If the action is to attack another card, the method
+     * reduces the health of the targeted card by the attack damage.
+     * If the targeted card's health drops to zero or below,
+     * the card is removed from the board.
+     * If the action targets a hero, the hero's health is reduced
+     * by the attacking card's damage, and the attacker is marked as having attacked.
+     * If a hero's health reaches zero or below, the game ends,
+     * and the player who killed the enemy hero is declared the winner.
+     *
+     * @param game the GameSession object that holds the current state of the game,
+     *             including the board and players.
+     * @param action the ActionsInput object containing details
+     *               of the action, including the target card and attacker.
+     */
     public void useAttack(final GameSession game, final ActionsInput action) {
         if (action.getCommand().equals("cardUsesAttack")) {
             Card cardAttacked = game.getBoard().
@@ -122,6 +126,13 @@ public class Card {
         }
     }
 
+    /**
+     * Executes the ability of the card, which is specific to each card.
+     * @param game the GameSession object that holds the current state of the game.
+     * @param action the actionsInput object containing details
+     *              about the action being performed such as the
+     *               card using the ability and any targets involved.
+     */
     public void useAbility(final GameSession game, final ActionsInput action) {
     }
 }

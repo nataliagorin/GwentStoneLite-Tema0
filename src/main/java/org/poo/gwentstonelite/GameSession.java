@@ -52,7 +52,18 @@ public final class GameSession {
         this.actionPerformer = new GameCommand(this);
     }
 
-
+    /**
+     * Prepares the game by setting up players, their heroes, and initial game conditions.
+     * This method is responsible for initializing game parameters at the start of the game,
+     * including setting the starting player, mana, health, and the initial
+     * cards in each player's deck.
+     * It also assigns each player a hero card with full health and
+     * shuffles their deck of cards based on the
+     * provided shuffle seed. The players' hands are initialized as empty at the start.
+     *
+     * @param cardActions The Action object that is responsible for
+     *                    setting up the cards for each player.
+     */
     public void prepareGame(final Action cardActions) {
         playerTurn = setupGame.getStartingPlayer();
         manaPerRound = 0;
@@ -78,6 +89,18 @@ public final class GameSession {
         playerTwo.setHandCards(new ArrayList<>());
     }
 
+    /**
+     * Shuffles the given deck of cards using a specified seed for randomization.
+     * This method creates a new shuffled deck by adding cards from the original deck
+     * and then shuffling them using the provided shuffle seed. The shuffle process ensures
+     * a random order of the cards in the deck.
+     *
+     * @param deck The ArrayList of Card objects representing the deck to be shuffled.
+     * @param shuffleSeed The seed value used to initialize the random number
+     *                    generator for shuffling.
+     *                    This allows for reproducible shuffling when using the same seed value.
+     * @return An ArrayList of Card objects representing the shuffled deck.
+     */
     public ArrayList<Card> shuffleCards(final ArrayList<Card> deck, final int shuffleSeed) {
         ArrayList<Card> shuffledDeck = new ArrayList<>();
 
@@ -89,6 +112,13 @@ public final class GameSession {
         return shuffledDeck;
     }
 
+    /**
+     * Starts the game by initializing the first round and performing
+     * actions for each player until the game ends.
+     * This method increments the total games played counter, sets up the game for the first round,
+     * and then processes each action in the list of ActionsInput. After each action is performed,
+     * it checks if both players have ended their turns and, if so, moves to the next round.
+     */
     public void startGame() {
         GwentStoneLite.setGamesPlayed(GwentStoneLite.getGamesPlayed() + 1);
         nextRound();
@@ -102,6 +132,16 @@ public final class GameSession {
         }
     }
 
+    /**
+     * Advances the game to the next round by updating mana and drawing cards for each player.
+     * In this method, the following actions occur:
+     *     - Increments the mana available to each player for the round,
+     *     up to the maximum mana limit.
+     *     - Each player receives a card from their deck (if available)
+     *     to add to their hand.
+     *     - Resets the end-of-turn flags for both players.
+     * This method ensures that both players are ready for the next round of actions.
+     */
     public void nextRound() {
         if (manaPerRound < MAXMANA) {
             manaPerRound++;

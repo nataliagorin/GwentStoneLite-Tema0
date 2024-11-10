@@ -34,7 +34,19 @@ public final class EmpressThorina extends Card {
         }
     }
 
-
+    /**
+     * Executes the ability of Empress Thorina, targeting the card with the highest
+     * health in the affected row.
+     * This method removes the card with the highest health from the
+     * specified row and reduces the
+     * player's mana by the mana cost of the ability. The method also
+     * marks the ability as having been used by setting the attacked flag to true.
+     *
+     * @param game The current game session, which provides access
+     *             to the board and player information.
+     * @param action The action containing the details about which row
+     *               to affect and the card's ability.
+     */
     public void ability(final GameSession game, final ActionsInput action) {
         int y = -1;
         int maxHealth = 0;

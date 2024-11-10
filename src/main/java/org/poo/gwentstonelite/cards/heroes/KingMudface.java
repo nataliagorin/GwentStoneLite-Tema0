@@ -34,6 +34,17 @@ public final class KingMudface extends Card {
         }
     }
 
+    /**
+     * Executes the ability of King Mudface, which increases the health of all
+     * cards in the affected row by 1. After the ability is used, the card is
+     * marked as having attacked.
+     * The player's mana is reduced by the mana cost of the ability.
+     *
+     * @param game The current game session, providing access to the board and player information.
+     * @param action The action containing the details about the affected row where
+     *               the ability will take place.
+     *               The action specifies which row will have its cards' health increased.
+     */
     public void ability(final GameSession game, final ActionsInput action) {
         ArrayList<Card> cards = game.getBoard().get(action.getAffectedRow());
 

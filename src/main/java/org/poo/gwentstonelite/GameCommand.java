@@ -12,7 +12,21 @@ public final class GameCommand {
         this.game = game;
     }
 
-
+    /**
+     * Performs an action based on the specified command in the ActionsInput.
+     * This method handles various commands, including debugging,
+     * statistics retrieval, card actions and ending the player's turn.
+     * The appropriate method is called based on the command
+     * provided in the action.
+     *
+     * @param action the ActionsInput object containing the details of the action to be performed.
+     *               The command within the action determines the type of action,
+     *               such as getting player stats performing a card action,
+     *               or ending the player's turn.
+     *
+     * @throws IllegalArgumentException if the command
+     * in the action is not recognized or is invalid.
+     */
     public void performAction(final ActionsInput action) {
         switch (action.getCommand()) {
             // Debugging commands
@@ -43,7 +57,23 @@ public final class GameCommand {
         }
     }
 
-
+    /**
+     * Uses the hero's ability for the current player, if possible.
+     * This method checks if the player has enough mana
+     * and if the hero has already attacked during the turn.
+     * If the conditions are met, the hero's ability is triggered.
+     * Otherwise, an appropriate error message is generated.
+     * The method uses the current player's hero card and
+     * performs the ability, taking into account the following conditions:
+     *      the player must have enough mana to use the hero's ability.
+     *      the hero has not already attacked during the turn.
+     * If any of these conditions are not met,
+     * an error message is generated and outputted.
+     *
+     * @param action the ActionsInput object containing
+     *              the details of the action to be performed,
+     *              including the command to use the hero's ability.
+     */
     public void useHeroAbility(final ActionsInput action) {
         Card hero;
         Player player;
@@ -76,7 +106,21 @@ public final class GameCommand {
         }
     }
 
-
+    /**
+     * Executes an attack from a card on the opponent's hero, if possible.
+     * This method performs the necessary checks to
+     * ensure the attack can be carried out, such as:
+     *      ensuring the attacking card is not frozen.
+     *      checking that the attacking card has not already attacked during the current turn.
+     *      verifying that the attack is targeting a valid card type
+     *          ('Tank') based on the position of the attacking card.
+     * If any condition fails, an appropriate error message is
+     * generated. If the attack is valid, the attack is executed.
+     *
+     * @param action the ActionsInput object containing the details
+     *              of the action, including the coordinates
+     *              of the attacker and the target.
+     */
     public void useAttackHero(final ActionsInput action) {
         Card attacker = game.getBoard().get(action.getCardAttacker().getX()).
                 get(action.getCardAttacker().getY());
@@ -110,7 +154,17 @@ public final class GameCommand {
         }
     }
 
-
+    /**
+     * Executes the ability of a card on the board, if possible.
+     * This method performs the necessary checks to ensure the card can use its ability:
+     * - Ensuring the card is not frozen.
+     * - Verifying that the card has not already attacked during the current turn.
+     * If the card is eligible to use its ability, the ability is executed.
+     * If any condition fails, an appropriate error message is generated.
+     * @param action the ActionsInput object containing the
+     *               details of the action, including the
+     *               coordinates of the card using the ability.
+     */
     public void cardUsesAbility(final ActionsInput action) {
         Card attacker = game.getBoard().get(action.getCardAttacker().getX()).
                 get(action.getCardAttacker().getY());
@@ -132,7 +186,21 @@ public final class GameCommand {
         }
     }
 
-
+    /**
+     * Executes an attack from one card to another on the board, if the conditions are met.
+     * This method performs several checks to ensure the attack can be executed:
+     * - The attacking card must belong to the current player's side (ROW0/ROW1).
+     * - The attacked card must belong to the enemy player's side (ROW2/ROW3).
+     * - The attacking card must not have already attacked during the current turn.
+     * - The attacking card must not be frozen.
+     * - If the target is a 'Tank', the attack is allowed only if
+     *      the attacked card is also a 'Tank' (depending on the row).
+     * If any of these conditions fail, an appropriate error message is generated.
+     * If the attack is valid, the attack is executed and the target's health is reduced.
+     * @param action the ActionsInput object containing the coordinates of
+     *               the attacking card and the attacked card,
+     *               along with other action details.
+     */
     public void cardUsesAttack(final ActionsInput action) {
         Coordinates cardAttackerCoord = action.getCardAttacker();
         Coordinates cardAttackedCoord = action.getCardAttacked();
@@ -198,7 +266,17 @@ public final class GameCommand {
         }
     }
 
-
+    /**
+     * Checks if there are any 'Tank' cards in the specified row of the game board.
+     * A 'Tank' card is a card that has a special defensive role,
+     * typically with high health or specific abilities.
+     * This method iterates through all cards in the
+     * given row and checks if any of them is of type 'Tank'.
+     * @param row the row index on the game board to check for 'Tank' cards.
+     *            The row corresponds to the player's and opponent's rows on the board.
+     * @return true if there is at least one 'Tank' card in the
+     * specified row and code false otherwise.
+     */
     public boolean checkTanks(final int row) {
         ArrayList<ArrayList<Card>> board = game.getBoard();
 
@@ -211,7 +289,15 @@ public final class GameCommand {
         return false;
     }
 
-
+    /**
+     * Places a card from the player's hand onto the game board,
+     * provided the player has enough mana and the target row is not full.
+     * This method checks if the player has sufficient mana to place the card
+     * and if the row where the card is to be placed has space.
+     * If any condition is not met, an error message is generated and no action is taken.
+     * @param action The ActionsInput containing the details of the card placement action,
+     *              including the index of the card in the player's hand.
+     */
     public void placeCard(final ActionsInput action) {
         Player player;
         Card card;
@@ -246,7 +332,20 @@ public final class GameCommand {
     }
 
 
-
+    /**
+     * Determines the appropriate row on the game board for a given card
+     * based on the current player's turn and the card's position.
+     * The method checks whether the card is positioned in the
+     * "front" or "back" row, and then places it in the corresponding row on the board.
+     * If the current player is Player 1, the card will be placed in either row 2
+     * or row 3 depending on whether it is a "front" or "back" card.
+     * If the current player is Player 2, the card will be placed
+     * in either row 0 or row 1 based on the same condition.
+     *
+     * @param card The Card whose row placement needs to be determined.
+     * @return The row index where the card should be placed
+     * on the board.
+     */
     public int getRow(final Card card) {
         if (game.getPlayerTurn() == 1) {
             if (GwentStoneLite.getCardActions().checkRow(card).equals("front")) {
@@ -263,7 +362,19 @@ public final class GameCommand {
         }
     }
 
-
+    /**
+     * Retrieves the number of wins for the specified player
+     * and outputs the result.
+     * This method checks the command provided in
+     * the ActionsInput and determines whether to get
+     * the wins for Player 1 or Player 2.
+     * It then calls the output creator to display the
+     * number of wins for the selected player.
+     *
+     * @param action The ActionsInput object that contains
+     *               the command to get the player's win count. The command should be either
+     *               "getPlayerOneWins" or "getPlayerTwoWins".
+     */
     public void getPlayerWins(final ActionsInput action) {
         Player player;
 
@@ -276,18 +387,34 @@ public final class GameCommand {
         GwentStoneLite.getOutputCreator().playerWinsOutput(player, action);
     }
 
-
+    /**
+     * Outputs the total number of games played in the current session.
+     * @param action The ActionsInput object containing the command for retrieving
+     *               the total games played statistic.
+     */
     public void getTotalGamesPlayed(final ActionsInput action) {
         GwentStoneLite.getOutputCreator().totalGamesOutput(action);
     }
 
 
-
+    /**
+     * Outputs the list of frozen cards currently on the game board.
+     * @param action The ActionsInput object that specifies the command
+     *               to retrieve the list of frozen cards on the board.
+     */
     public void getFrozenCardsOnTable(final ActionsInput action) {
         GwentStoneLite.getOutputCreator().frozenCardsOutput(game.getBoard(), action);
     }
 
-
+    /**
+     * Outputs the current mana level of the specified player.
+     * This method retrieves the mana level for the player specified in the ActionsInput
+     * and sends this information to the output creator for display. The player is determined
+     * by the index provided in the action input.
+     *
+     * @param action The ActionsInput object containing the player index
+     *               to identify which player's mana to retrieve and display.
+     */
     public void getPlayerMana(final ActionsInput action) {
         Player player;
 
@@ -300,7 +427,19 @@ public final class GameCommand {
         GwentStoneLite.getOutputCreator().playerManaOutput(player, action);
     }
 
-
+    /**
+     * Retrieves and outputs the card located at a specified position on the game board.
+     * This method checks if there is a card at the
+     * position indicated by the coordinates
+     * in the ActionsInput. If a card is found, it
+     * is retrieved and sent to the output
+     * creator along with the action details.
+     * If no card is present at the specified position,
+     * an error message is sent instead.
+     *
+     * @param action The ActionsInput object containing the coordinates (x, y)
+     *               of the board position to check for a card.
+     */
     public void getCardAtPosition(final ActionsInput action) {
         Card card = null;
         String errorMessage = "null";
@@ -314,6 +453,15 @@ public final class GameCommand {
         GwentStoneLite.getOutputCreator().cardAtPositionOutput(card, action, errorMessage);
     }
 
+    /**
+     * Retrieves and outputs the hero card of the specified player.
+     * This method identifies the player based on the player index provided in the
+     * ActionsInput object. It retrieves the hero card for the selected player
+     * and sends it to the output creator along with the action details.
+     *
+     * @param action The ActionsInput object containing the player index (1 or 2)
+     *               to specify which player's hero card to retrieve.
+     */
     public void getPlayerHero(final ActionsInput action) {
         if (action.getPlayerIdx() == 1) {
             GwentStoneLite.getOutputCreator().
@@ -324,13 +472,29 @@ public final class GameCommand {
         }
     }
 
-
+    /**
+     * Retrieves and outputs all cards currently on the game board.
+     * This method accesses the game board and sends its current state, which includes
+     * all cards on the table, to the output creator for display along with the action details.
+     *
+     * @param action The ActionsInput object containing action-specific information
+     *               to assist with processing the output.
+     */
     public void getCardsOnTable(final ActionsInput action) {
         GwentStoneLite.getOutputCreator().boardOutput(game.getBoard(), action);
     }
 
 
-
+    /**
+     * Retrieves and outputs the deck of a specified player.
+     * This method fetches the deck of the player indicated by the player index
+     * in the provided action and sends the deck information to the output creator
+     * for display.
+     *
+     * @param action The ActionsInput object containing the index of the player
+     *               whose deck is to be retrieved and action-specific details
+     *               for processing.
+     */
     public void getPlayerDeck(final ActionsInput action) {
         if (action.getPlayerIdx() == 1) {
             GwentStoneLite.getOutputCreator().
@@ -341,11 +505,24 @@ public final class GameCommand {
         }
     }
 
-
+    /**
+     * Retrieves and outputs the current player's turn.
+     * @param action The ActionsInput object containing details needed
+     *               for output processing.
+     */
     public void getPlayerTurn(final ActionsInput action) {
         GwentStoneLite.getOutputCreator().playerTurnOutput(game.getPlayerTurn(), action);
     }
 
+    /**
+     * Ends the current player's turn and prepares the game state for the next player.
+     * This method performs several actions based on which player's turn it is:
+     *   - Marks the current player's turn as ended.
+     *   - Resets the status of all cards on the player's board rows, including
+     *       removing any frozen or attacked status from cards.
+     *   - Resets the player's hero card status.
+     *   - Switches the turn to the other player.
+     */
     public void endPlayerTurn() {
         if (game.getPlayerTurn() == 1) {
             game.setPlayerOneEndTurn(true);
@@ -363,7 +540,15 @@ public final class GameCommand {
     }
 
 
-
+    /**
+     * Retrieves the cards currently in the specified player's hand and outputs the information.
+     * This method checks the player index provided in the action parameter
+     * to determine which player's hand to retrieve. It then uses the output creator to
+     * display the list of cards in that player's hand.
+     *
+     * @param action The ActionsInput object containing details about the action,
+     *               including the index of the player whose hand is to be retrieved.
+     */
     public void getCardsInHand(final ActionsInput action) {
         if (action.getPlayerIdx() == 1) {
             GwentStoneLite.getOutputCreator().
