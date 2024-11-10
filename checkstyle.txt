@@ -1,2 +1,6 @@
 Starting audit...
+[ERROR] C:\Users\gorin\Desktop\GwentStoneLite-Tema0\.\src\main\java\org\poo\checker\Checker.java:1: File does not end with a newline. [NewlineAtEndOfFile]
+[ERROR] C:\Users\gorin\Desktop\GwentStoneLite-Tema0\.\src\main\java\org\poo\checker\CheckerConstants.java:1: File does not end with a newline. [NewlineAtEndOfFile]
+[ERROR] C:\Users\gorin\Desktop\GwentStoneLite-Tema0\.\src\main\java\org\poo\checker\Checkstyle.java:1: File does not end with a newline. [NewlineAtEndOfFile]
 Audit done.
+Checkstyle ends with 3 errors.
